@@ -1,0 +1,70 @@
+# --- CRITICAL: Google Cloud Secrets ---
+# NEVER upload your service account key!
+service-account-key.json
+*.json
+!package.json
+!tsconfig.json
+
+# --- Python Essentials ---
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# --- Virtual Environments (Venv) ---
+# If you use venv, virtualenv, or conda
+venv/
+ENV/
+env/
+.venv/
+.env
+
+# --- IDE & Editor Files ---
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# --- Jupyter Notebooks (if used) ---
+.ipynb_checkpoints
+
+# --- Large Data & Media Files ---
+# Do not upload videos or extracted frames to GitHub!
+data/
+*.mp4
+*.mov
+*.avi
+*.jpg
+*.png
+*.jpeg
+frames/
+uploads/
+downloads/
+
+# --- Logs & Temporary Files ---
+logs/
+*.log
+tmp/
+temp/
+
+# --- Google Cloud Local Configs ---
+application_default_credentials.json
+gcloud_config/
