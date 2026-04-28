@@ -95,125 +95,125 @@ Technical Pipeline:<br>
 File: src/rppg_engine.py
 
 ### **Layer 6: Lip-Sync Forensics**
-Purpose: Detect audio-video manipulation by correlating mouth movements with audio energy.
+Purpose: Detect audio-video manipulation by correlating mouth movements with audio energy.<br><br>
 
-Technical Pipeline:
-1. Extract Audio Energy (Librosa RMS)
-2. Detect Mouth Regions (MediaPipe 37 landmarks)
-3. Calculate Mouth Opening (Threshold-based)
-4. Align Signals (Match video FPS to audio hop length)
-5. Calculate Pearson Correlation
-6. Decision: >0.4 = MATCH, <0.2 = MISMATCH
+Technical Pipeline:<br>
+1. Extract Audio Energy (Librosa RMS)<br>
+2. Detect Mouth Regions (MediaPipe 37 landmarks)<br>
+3. Calculate Mouth Opening (Threshold-based)<br>
+4. Align Signals (Match video FPS to audio hop length)<br>
+5. Calculate Pearson Correlation<br>
+6. Decision: >0.4 = MATCH, <0.2 = MISMATCH<br><br>
 
 File: src/lip_sync_engine.py
 
 ### **Layer 7: Steganography Watermark Extraction**
-Purpose: Extract hidden forensic watermarks to trace content leaks to source partners.
-Watermarking Scheme:
-Embedding (Done by Broadcaster):
-LSB (Least Significant Bit) steganography in blue channel
-Partner ID encoded as binary (e.g., "PARTNER_B_PRIME")
-Embedded across multiple frames for robustness
+Purpose: Extract hidden forensic watermarks to trace content leaks to source partners.<br>
+Watermarking Scheme:<br>
+Embedding (Done by Broadcaster):<br>
+LSB (Least Significant Bit) steganography in blue channel<br>
+Partner ID encoded as binary (e.g., "PARTNER_B_PRIME")<br>
+Embedded across multiple frames for robustness<br><br>
 
-Extraction (Forensic Analysis):
-1. Read video frame
-2. Extract LSB from blue channel
-3. Reconstruct binary string
-4. Convert to ASCII text
-5. Pattern match partner ID (regex: PARTNER_[A-Z]+)
-6. Lookup partner in database
-7. Generate DMCA evidence
+Extraction (Forensic Analysis):<br>
+1. Read video frame<br>
+2. Extract LSB from blue channel<br>
+3. Reconstruct binary string<br>
+4. Convert to ASCII text<br>
+5. Pattern match partner ID (regex: PARTNER_[A-Z]+)<br>
+6. Lookup partner in database<br>
+7. Generate DMCA evidence<br><br>
 
-Leak Trace Workflow:
-Leaked File: TELEGRAM_LEAK_wm_match.mp4
-Extracted Watermark: "PARTNER_B_PRIME"
-Source: Amazon Prime (Global, Premium Tier)
-Confidence: 98.5%
-Action: Issue DMCA takedown notice to Amazon Prime
+Leak Trace Workflow:<br>
+Leaked File: TELEGRAM_LEAK_wm_match.mp4<br>
+Extracted Watermark: "PARTNER_B_PRIME"<br>
+Source: Amazon Prime (Global, Premium Tier)<br>
+Confidence: 98.5%<br>
+Action: Issue DMCA takedown notice to Amazon Prime<br><br>
 
-File: src/watermark_engine.py, src/simulate_leak_trace.py
+File: src/watermark_engine.py, src/simulate_leak_trace.py<br>
 
 
 ##  Installation
 
 ### **Prerequisites**
-Python 3.11 or higher
-FFmpeg (for audio extraction)
-Git
+Python 3.11 or higher<br>
+FFmpeg (for audio extraction)<br>
+Git<br>
 ### Step 1: Clone Repository
-git clone https://github.com/yourusername/guardian-stream.git
-cd guardian-stream
+git clone https://github.com/yourusername/guardian-stream.git<br>
+cd guardian-stream<br>
 
 ### Step 2: Create Virtual Environment
- Windows
-python -m venv .venv
-.venv\Scripts\activate
+ Windows<br>
+python -m venv .venv<br>
+.venv\Scripts\activate<br>
 
- macOS/Linux
-python3 -m venv .venv
-source .venv/bin/activate
+ macOS/Linux<br>
+python3 -m venv .venv<br>
+source .venv/bin/activate<br>
 
 ### Step 3: Install Python Dependencies
-pip install -r requirements.txt
+pip install -r requirements.txt<br>
 
 ### **Step 4: Install FFmpeg**
-Windows:  Download from https://ffmpeg.org/download.html --> Add to system PATH
-macOS: brew install ffmpeg
-Linux: sudo apt-get install ffmpeg
+Windows:  Download from https://ffmpeg.org/download.html --> Add to system PATH<br>
+macOS: brew install ffmpeg<br>
+Linux: sudo apt-get install ffmpeg<br>
 
 ### Step 5: Configure Google Gemini API
-GOOGLE_API_KEY=your_api_key_here
+GOOGLE_API_KEY=your_api_key_here<br>
 
 ### Step 6: Verify Installation
- Test rPPG engine
-python src/rppg_engine.py
+ Test rPPG engine<br>
+python src/rppg_engine.py<br><br>
 
- Test lip-sync engine
-python src/lip_sync_engine.py videos/novak_interview_real.mp4
+ Test lip-sync engine<br>
+python src/lip_sync_engine.py videos/novak_interview_real.mp4<br><br>
 
- Test news fetcher
+ Test news fetcher<br>
 python test_news_fetch.py
 
 ##  Usage & Running Modes
 ### Mode 1: Interactive Analysis (Recommended)
-Analyze videos with full forensic pipeline:
-  python src/gemini_intelligence.py --interactive
+Analyze videos with full forensic pipeline:<br>
+  python src/gemini_intelligence.py --interactive<br><br>
 
-Interactive Prompt: Example
-  Enter video file path (or press Enter for demo clips): videos/novak_interview_real.mp4
-  Video type:
-   1. Interview/Close-up (enables rPPG + Lip-Sync)
-   2. Sports/Wide-shot (skips rPPG + Lip-Sync)
-   Choose (1 or 2, default=2): 1
+Interactive Prompt: Example<br>
+  Enter video file path (or press Enter for demo clips): videos/novak_interview_real.mp4<br>
+  Video type:<br>
+   1. Interview/Close-up (enables rPPG + Lip-Sync)<br>
+   2. Sports/Wide-shot (skips rPPG + Lip-Sync)<br>
+   Choose (1 or 2, default=2): 1<br><br>
 
-  Context: Novak Djokovic post match conference
+  Context: Novak Djokovic post match conference<br>
 
-Output: INFO REAL MODE ENABLED - Will analyze actual video files
-INFO Video: videos/novak_interview_real.mp4
-INFO Initializing GenAI Client with Stable API (v1)...
-INFO Loaded 5 entries from vision report
-INFO Transcribing first 15s of novak_interview_real.mp4...
-INFO [REAL] Whisper transcript: "I don't know what I can say to them..."
-INFO Running Semantic Triangulation...
-INFO PULSE DETECTED: Physiological pulse at 71 BPM
-INFO Verdict: AUTHENTIC (Confidence: 93%)
-INFO Analysis Complete! Saved to gemini_intelligence_report.json
+Output: INFO REAL MODE ENABLED - Will analyze actual video files<br>
+INFO Video: videos/novak_interview_real.mp4<br>
+INFO Initializing GenAI Client with Stable API (v1)...<br>
+INFO Loaded 5 entries from vision report<br>
+INFO Transcribing first 15s of novak_interview_real.mp4...<br>
+INFO [REAL] Whisper transcript: "I don't know what I can say to them..."<br>
+INFO Running Semantic Triangulation...<br>
+INFO PULSE DETECTED: Physiological pulse at 71 BPM<br>
+INFO Verdict: AUTHENTIC (Confidence: 93%)<br>
+INFO Analysis Complete! Saved to gemini_intelligence_report.json<br><br>
 
 ### Mode 2: Piracy Simulation
-Simulate leak detection and trace source:
-  python src/simulate_leak_trace.py
+Simulate leak detection and trace source:<br>
+  python src/simulate_leak_trace.py<br><br>
 
-Output:
-INFO Starting GuardianStream Piracy Detection & Trace Demo
-INFO Phase 1: Distributing Content with Invisible Watermarks...
-INFO Successfully embedded ID 'PARTNER_A_NETFLIX' into wm_match_ep1.png
-INFO Successfully embedded ID 'PARTNER_B_PRIME' into wm_match_ep2.png
-INFO Successfully embedded ID 'PARTNER_C_HOTSTAR' into wm_match_ep3.png
-INFO PHASE 2: ALERT! Pirated Content Detected on Telegram!
-INFO Found suspicious file: TELEGRAM_LEAK_wm_match_ep2.png
-INFO Initiating Forensic Analysis...
-INFO Extracted ID: 'PARTNER_B_PRIME' from TELEGRAM_LEAK...
-Extraction Result: 'PARTNER_B_PRIME'
+Output:<br>
+INFO Starting GuardianStream Piracy Detection & Trace Demo<br>
+INFO Phase 1: Distributing Content with Invisible Watermarks...<br>
+INFO Successfully embedded ID 'PARTNER_A_NETFLIX' into wm_match_ep1.png<br>
+INFO Successfully embedded ID 'PARTNER_B_PRIME' into wm_match_ep2.png<br>
+INFO Successfully embedded ID 'PARTNER_C_HOTSTAR' into wm_match_ep3.png<br>
+INFO PHASE 2: ALERT! Pirated Content Detected on Telegram!<br>
+INFO Found suspicious file: TELEGRAM_LEAK_wm_match_ep2.png<br>
+INFO Initiating Forensic Analysis...<br>
+INFO Extracted ID: 'PARTNER_B_PRIME' from TELEGRAM_LEAK...<br>
+Extraction Result: 'PARTNER_B_PRIME'<br>
 
 *==================== LEAK TRACE COMPLETE ====================
 Leaked File     : TELEGRAM_LEAK_wm_match_ep2.png
@@ -224,21 +224,21 @@ Report Saved    : leak_trace_report.json
 ==============================================================*
 
 ### Mode 3: Individual Engine Testing
-Test specific forensic engines:
- Test rPPG engine
-  python src/rppg_engine.py videos/novak_interview_real.mp4
+Test specific forensic engines:<br>
+ Test rPPG engine<br>
+  python src/rppg_engine.py videos/novak_interview_real.mp4<br><br>
 
- Test lip-sync engine
-  python src/lip_sync_engine.py videos/novak_interview_real.mp4 150
+ Test lip-sync engine<br>
+  python src/lip_sync_engine.py videos/novak_interview_real.mp4 150<br><br>
 
- Test vision forensics
-  python src/vision_forensics.py videos/novak_interview_real.mp4
+ Test vision forensics<br>
+  python src/vision_forensics.py videos/novak_interview_real.mp4<br><br>
 
- Test news fetcher
-  python test_news_fetch.py "Novak Djokovic Australian Open"
+ Test news fetcher<br>
+  python test_news_fetch.py "Novak Djokovic Australian Open"<br><br>
 
- Test semantic dissonance
-  python test_dissonance_standalone.py
+ Test semantic dissonance<br>
+  python test_dissonance_standalone.py<br>
  
 
 
@@ -248,15 +248,15 @@ Test specific forensic engines:
 <img width="421" height="271" alt="image" src="https://github.com/user-attachments/assets/faf1cda1-cf9d-4b71-98dd-65cd192289c8" />
 
 ### **Frontend**
-HTML/CSS/JS(Static Pages)
-Next.js, TyspeScript, Tailwind CSS (Future Scope)
+HTML/CSS/JS(Static Pages)<br>
+Next.js, TyspeScript, Tailwind CSS (Future Scope)<br>
 
 ## Reports Generated
 GuardianStream generates comprehensive forensic reports for legal and analytical use.
 
 ### 1. Gemini Intelligence Report (gemini_intelligence_report.json)
-Generated by: src/gemini_intelligence.py
-Contents:
+Generated by: src/gemini_intelligence.py<br>
+Contents:<br>
 
 [
   {
@@ -287,8 +287,8 @@ Contents:
 ]
 
 ### 2. Leak Trace Report (leak_trace_report.json)
-Generated by: src/simulate_leak_trace.py
-Contents:
+Generated by: src/simulate_leak_trace.py<br>
+Contents:<br>
 
 {
   "leaked_file": "TELEGRAM_LEAK_wm_match_ep2.png",
@@ -304,8 +304,8 @@ Contents:
 }
 
 ### 3. Vision Forensics Report (vision_forensics_report.json)
-Generated by: src/vision_forensics.py
-Contents:
+Generated by: src/vision_forensics.py<br>
+Contents:<br>
 
 {
   "video_path": "videos/novak_interview_real.mp4",
@@ -323,8 +323,8 @@ Contents:
 }
 
 ### 4. DMCA Takedown Notice (DMCA_Test_Clip_01.txt)
-Generated by: src/action_engine.py
-Contents:
+Generated by: src/action_engine.py<br>
+Contents:<br>
 
 DIGITAL MILLENNIUM COPYRIGHT ACT
 TAKEDOWN NOTICE
@@ -355,30 +355,30 @@ GuardianStream Security Team
 
 
 ### 5. Propagation Network Graph (propagation_graph.png)
-Generated by: src/action_engine.py
-Description: Visual representation of how leaked content spreads across platforms (Twitter → YouTube → Telegram → Torrent sites).
+Generated by: src/action_engine.py<br>
+Description: Visual representation of how leaked content spreads across platforms (Twitter → YouTube → Telegram → Torrent sites).<br>
 
 ### 6. Terminal Output Logs
-All analysis sessions generate real-time terminal logs showing:
-Engine initialization
-Frame processing progress
-Intermediate results (BPM, correlation, credibility)
-Final verdict with confidence
+All analysis sessions generate real-time terminal logs showing:<br>
+Engine initialization<br>
+Frame processing progress<br>
+Intermediate results (BPM, correlation, credibility)<br>
+Final verdict with confidence<br>
 
-Example: 
-INFO Starting GuardianStream Analysis...
-INFO Video: novak_interview_real.mp4
-INFO Context: Novak Djokovic post match conference
-INFO Loading Whisper model (small)...
-INFO Transcribing first 15s of video...
-✅ Transcript: "I don't know what I can say to them..."
-INFO Running rPPG Analysis (Close-up detected)...
-✅ Extracted 228 frames with faces
-✅ PULSE DETECTED: Physiological pulse at 71 BPM
-✅ rPPG Result: REAL_PERSON
-INFO Running Lip-Sync Analysis...
-✅ Lip-Sync Result: AUDIO_VIDEO_MATCH
-INFO Verdict: AUTHENTIC (Confidence: 93%)
+Example: <br>
+INFO Starting GuardianStream Analysis...<br>
+INFO Video: novak_interview_real.mp4<br>
+INFO Context: Novak Djokovic post match conference<br>
+INFO Loading Whisper model (small)...<br>
+INFO Transcribing first 15s of video...<br>
+✅ Transcript: "I don't know what I can say to them..."<br>
+INFO Running rPPG Analysis (Close-up detected)...<br>
+✅ Extracted 228 frames with faces<br>
+✅ PULSE DETECTED: Physiological pulse at 71 BPM<br>
+✅ rPPG Result: REAL_PERSON<br>
+INFO Running Lip-Sync Analysis...<br>
+✅ Lip-Sync Result: AUDIO_VIDEO_MATCH<br>
+INFO Verdict: AUTHENTIC (Confidence: 93%)<br>
 ✅ Analysis Complete! Report saved.
 
 
