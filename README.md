@@ -13,84 +13,84 @@ The sports broadcasting industry faces unprecedented threats: Deepfake Interview
 
 ## **Seven-Layer Forensic Engine**
 ### **Layer 1: Perceptual Hash (pHash)**
-Purpose: Detect unauthorized copies and modified versions of broadcast content.<br>
-How It Works:
-Convert video frame to grayscale
-Resize to 32×32 pixels (standardization)
-Apply Discrete Cosine Transform (DCT)
-Extract low-frequency components (top-left 8×8)
-Calculate median value
-Generate 64-bit hash: 1 if pixel > median, 0 otherwise
-Compare hashes using Hamming distance (threshold < 10 = match)
-Technical Specs:
-Hash Size: 64 bits
-Processing Speed: ~50ms per frame
-Robustness: Survives compression, resizing, color changes
-Accuracy: 98% for duplicate detection
-File: src/hash_engine.py
+Purpose: Detect unauthorized copies and modified versions of broadcast content.<br><br>
+How It Works:<br>
+Convert video frame to grayscale<br>
+Resize to 32×32 pixels (standardization)<br>
+Apply Discrete Cosine Transform (DCT)<br>
+Extract low-frequency components (top-left 8×8)<br>
+Calculate median value<br>
+Generate 64-bit hash: 1 if pixel > median, 0 otherwise<br>
+Compare hashes using Hamming distance (threshold < 10 = match)<br>
+Technical Specs:<br>
+Hash Size: 64 bits<br>
+Processing Speed: ~50ms per frame<br>
+Robustness: Survives compression, resizing, color changes<br>
+Accuracy: 98% for duplicate detection<br>
+File: src/hash_engine.py<br>
 
 ### **Layer 2: Vision AI + OCR**
-Purpose: Extract visual context and on-screen text for verification.
-Components:
-A. OCR (Optical Character Recognition)
-Engine: Tesseract OCR / EasyOCR
-Preprocessing: Contrast enhancement, denoising
-Text detection: CRAFT or DBNet
-Recognition: CTC decoding
-Output: Text + bounding boxes + confidence
-B. Vision AI (Scene Understanding)
-Model: CLIP / ViT / ResNet
-Tasks: Object detection, scene classification, brand recognition
+Purpose: Extract visual context and on-screen text for verification.<br><br>
+Components:<br>
+A. OCR (Optical Character Recognition)<br>
+Engine: Tesseract OCR / EasyOCR<br>
+Preprocessing: Contrast enhancement, denoising<br>
+Text detection: CRAFT or DBNet<br>
+Recognition: CTC decoding<br>
+Output: Text + bounding boxes + confidence<br>
+B. Vision AI (Scene Understanding)<br>
+Model: CLIP / ViT / ResNet<br>
+Tasks: Object detection, scene classification, brand recognition<br><br>
 
-Output Example:
-{
-  "text_overlay": [
-    {"text": "LIVE", "confidence": 0.98, "bbox": [10, 10, 50, 30]},
-    {"text": "AO 2024", "confidence": 0.95, "bbox": [100, 10, 200, 30]}
-  ],
-  "scene_labels": ["tennis_court", "press_conference", "athlete"],
-  "detected_objects": [
-    {"class": "person", "confidence": 0.99},
-    {"class": "microphone", "confidence": 0.87},
-    {"class": "Rolex_logo", "confidence": 0.92}
-  ]
-}
-File: src/vision_forensics.py
+Output Example:<br>
+{<br>
+  "text_overlay": [<br>
+    {"text": "LIVE", "confidence": 0.98, "bbox": [10, 10, 50, 30]},<br>
+    {"text": "AO 2024", "confidence": 0.95, "bbox": [100, 10, 200, 30]}<br>
+  ],<br>
+  "scene_labels": ["tennis_court", "press_conference", "athlete"],<br>
+  "detected_objects": [<br>
+    {"class": "person", "confidence": 0.99},<br>
+    {"class": "microphone", "confidence": 0.87},<br>
+    {"class": "Rolex_logo", "confidence": 0.92}<br>
+  ]<br>
+}<br>
+File: src/vision_forensics.py<br>
 
 ### **Layer 3: Live News Verification**
-Purpose: Ground video claims in reality by cross-referencing live news sources.
-Workflow:
-Extract context from video (OCR + Vision AI)
-Generate search query (e.g., "Novak Djokovic Australian Open 2024")
-Query Google News RSS API
-Filter results by trusted sources (ESPN, BBC, Reuters, ICC)
-Calculate credibility score (0-100%)
-File: src/news_fetcher.py
+Purpose: Ground video claims in reality by cross-referencing live news sources.<br>
+Workflow:<br>
+Extract context from video (OCR + Vision AI)<br>
+Generate search query (e.g., "Novak Djokovic Australian Open 2024")<br>
+Query Google News RSS API<br>
+Filter results by trusted sources (ESPN, BBC, Reuters, ICC)<br>
+Calculate credibility score (0-100%)<br>
+File: src/news_fetcher.py<br>
 
-### **Layer 4: Semantic Dissonance Detection**
-Purpose: Detect misleading context by comparing video content, audio transcript, and news.
-Triangulation Algorithm:
-Year/Date Mismatch: OCR text ("2019 World Cup") vs audio claims ("2024 scandal")
-Claim Contradiction: Audio claims contradict verified news
-Player/Event Mismatch: Video shows Player A but audio mentions Player B
-File: src/action_engine.py, test_dissonance_standalone.py
+### **Layer 4: Semantic Dissonance Detection**v
+Purpose: Detect misleading context by comparing video content, audio transcript, and news.<br>
+Triangulation Algorithm:<br>
+Year/Date Mismatch: OCR text ("2019 World Cup") vs audio claims ("2024 scandal")<br>
+Claim Contradiction: Audio claims contradict verified news<br>
+Player/Event Mismatch: Video shows Player A but audio mentions Player B<br>
+File: src/action_engine.py, test_dissonance_standalone.py<br>
 
 ### **Layer 5: rPPG Biological Detection**
-Purpose: Detect real human heartbeat in video frames to prove biological authenticity.
-The Science:
-Remote Photoplethysmography (rPPG) measures subtle color changes in facial skin caused by blood flow. When the heart pumps, facial skin reflects slightly more red light. This change is imperceptible to humans but detectable by computer vision.
+Purpose: Detect real human heartbeat in video frames to prove biological authenticity.<br>
+The Science:<br>
+Remote Photoplethysmography (rPPG) measures subtle color changes in facial skin caused by blood flow. When the heart pumps, facial skin reflects slightly more red light. This change is imperceptible to humans but detectable by computer vision.<br>
 
-Technical Pipeline:
-1. Face Detection & Tracking (MediaPipe Face Mesh)
-2. Extract forehead ROI (best for rPPG)
-3. Color Signal Extraction (RGB channels over time)
-4. Signal Preprocessing (Detrend + Normalize)
-5. CHROM Method (Color space transformation)
-6. Bandpass Filter (0.7-4.0 Hz = 42-240 BPM)
-7. Peak Detection (SciPy signal.find_peaks)
-8. Calculate BPM (60 / avg_peak_interval)
-9. SNR Calculation (Signal quality metric)
-10. Decision: Real human if BPM 40-180 AND SNR > 3dB
+Technical Pipeline:<br>
+1. Face Detection & Tracking (MediaPipe Face Mesh)<br>
+2. Extract forehead ROI (best for rPPG)<br>
+3. Color Signal Extraction (RGB channels over time)<br>
+4. Signal Preprocessing (Detrend + Normalize)<br>
+5. CHROM Method (Color space transformation)<br>
+6. Bandpass Filter (0.7-4.0 Hz = 42-240 BPM)<br>
+7. Peak Detection (SciPy signal.find_peaks)<br>
+8. Calculate BPM (60 / avg_peak_interval)<br>
+9. SNR Calculation (Signal quality metric)<br>
+10. Decision: Real human if BPM 40-180 AND SNR > 3dB<br><br>
 
 File: src/rppg_engine.py
 
