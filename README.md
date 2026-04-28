@@ -1,20 +1,20 @@
-### **Guardian-Stream**
+# **Guardian-Stream**
 GuardianStream is a production-grade, multi-modal forensic analysis platform designed to protect sports broadcasters from deepfakes, piracy, and misinformation. Our system employs seven distinct forensic engines that work in concert to verify video authenticity and trace unauthorized content distribution in real-time.
 
-**Key Capabilities**--Biological Authentication,  Leak Source Identification, Deepfake Detection, Real-Time Analysis,  Legal Evidence
+## **Key Capabilities**--Biological Authentication,  Leak Source Identification, Deepfake Detection, Real-Time Analysis,  Legal Evidence
 
 
 ##  Installation
 
-# **Prerequisites**
+### **Prerequisites**
 Python 3.11 or higher
 FFmpeg (for audio extraction)
 Git
-# Step 1: Clone Repository
+### Step 1: Clone Repository
 git clone https://github.com/yourusername/guardian-stream.git
 cd guardian-stream
 
-# Step 2: Create Virtual Environment
+### Step 2: Create Virtual Environment
  Windows
 python -m venv .venv
 .venv\Scripts\activate
@@ -23,15 +23,15 @@ python -m venv .venv
 python3 -m venv .venv
 source .venv/bin/activate
 
-# Step 3: Install Python Dependencies
+### Step 3: Install Python Dependencies
 pip install -r requirements.txt
 
-#**Step 4: Install FFmpeg**
+### **Step 4: Install FFmpeg**
 Windows:  Download from https://ffmpeg.org/download.html --> Add to system PATH
 macOS: brew install ffmpeg
 Linux: sudo apt-get install ffmpeg
 
-# Step 5: Configure Google Gemini API
+### Step 5: Configure Google Gemini API
 GOOGLE_API_KEY=your_api_key_here
 
 # Step 6: Verify Installation
@@ -45,7 +45,7 @@ python src/lip_sync_engine.py videos/novak_interview_real.mp4
 python test_news_fetch.py
 
 ##  Usage & Running Modes
-# Mode 1: Interactive Analysis (Recommended)
+### Mode 1: Interactive Analysis (Recommended)
 Analyze videos with full forensic pipeline:
   python src/gemini_intelligence.py --interactive
 
@@ -69,7 +69,7 @@ INFO PULSE DETECTED: Physiological pulse at 71 BPM
 INFO Verdict: AUTHENTIC (Confidence: 93%)
 INFO Analysis Complete! Saved to gemini_intelligence_report.json
 
-# Mode 2: Piracy Simulation
+### Mode 2: Piracy Simulation
 Simulate leak detection and trace source:
   python src/simulate_leak_trace.py
 
@@ -93,7 +93,7 @@ Action          : ISSUE DMCA & TERMINATE CONTRACT
 Report Saved    : leak_trace_report.json
 ==============================================================
 
-# Mode 3: Individual Engine Testing
+### Mode 3: Individual Engine Testing
 Test specific forensic engines:
  Test rPPG engine
   python src/rppg_engine.py videos/novak_interview_real.mp4
@@ -117,7 +117,7 @@ The sports broadcasting industry faces unprecedented threats: Deepfake Interview
 **GuardianStream solves all five gaps with a unified 7-layer forensic platform**
 
 ## **Seven-Layer Forensic Engine**
-# **Layer 1: Perceptual Hash (pHash)**
+### **Layer 1: Perceptual Hash (pHash)**
 Purpose: Detect unauthorized copies and modified versions of broadcast content.
 How It Works:
 Convert video frame to grayscale
@@ -134,7 +134,7 @@ Robustness: Survives compression, resizing, color changes
 Accuracy: 98% for duplicate detection
 File: src/hash_engine.py
 
-# **Layer 2: Vision AI + OCR**
+### **Layer 2: Vision AI + OCR**
 Purpose: Extract visual context and on-screen text for verification.
 Components:
 A. OCR (Optical Character Recognition)
@@ -162,7 +162,7 @@ Output Example:
 }
 File: src/vision_forensics.py
 
-# **Layer 3: Live News Verification**
+### **Layer 3: Live News Verification**
 Purpose: Ground video claims in reality by cross-referencing live news sources.
 Workflow:
 Extract context from video (OCR + Vision AI)
@@ -172,7 +172,7 @@ Filter results by trusted sources (ESPN, BBC, Reuters, ICC)
 Calculate credibility score (0-100%)
 File: src/news_fetcher.py
 
-# **Layer 4: Semantic Dissonance Detection**
+### **Layer 4: Semantic Dissonance Detection**
 Purpose: Detect misleading context by comparing video content, audio transcript, and news.
 Triangulation Algorithm:
 Year/Date Mismatch: OCR text ("2019 World Cup") vs audio claims ("2024 scandal")
@@ -180,7 +180,7 @@ Claim Contradiction: Audio claims contradict verified news
 Player/Event Mismatch: Video shows Player A but audio mentions Player B
 File: src/action_engine.py, test_dissonance_standalone.py
 
-# **Layer 5: rPPG Biological Detection**
+### **Layer 5: rPPG Biological Detection**
 Purpose: Detect real human heartbeat in video frames to prove biological authenticity.
 The Science:
 Remote Photoplethysmography (rPPG) measures subtle color changes in facial skin caused by blood flow. When the heart pumps, facial skin reflects slightly more red light. This change is imperceptible to humans but detectable by computer vision.
@@ -199,7 +199,7 @@ Technical Pipeline:
 
 File: src/rppg_engine.py
 
-# **Layer 6: Lip-Sync Forensics**
+### **Layer 6: Lip-Sync Forensics**
 Purpose: Detect audio-video manipulation by correlating mouth movements with audio energy.
 
 Technical Pipeline:
@@ -212,7 +212,7 @@ Technical Pipeline:
 
 File: src/lip_sync_engine.py
 
-# **Layer 7: Steganography Watermark Extraction**
+### **Layer 7: Steganography Watermark Extraction**
 Purpose: Extract hidden forensic watermarks to trace content leaks to source partners.
 Watermarking Scheme:
 Embedding (Done by Broadcaster):
@@ -241,17 +241,17 @@ File: src/watermark_engine.py, src/simulate_leak_trace.py
 
 ## ** Tech Stack**
 
-#**Backend (Python 3.11+)**
+### **Backend (Python 3.11+)**
 <img width="421" height="271" alt="image" src="https://github.com/user-attachments/assets/faf1cda1-cf9d-4b71-98dd-65cd192289c8" />
 
-#**Frontend**
+### **Frontend**
 HTML/CSS/JS(Static Pages)
 Next.js, TyspeScript, Tailwind CSS (Future Scope)
 
 ## Reports Generated
 GuardianStream generates comprehensive forensic reports for legal and analytical use.
 
-# 1. Gemini Intelligence Report (gemini_intelligence_report.json)
+### 1. Gemini Intelligence Report (gemini_intelligence_report.json)
 Generated by: src/gemini_intelligence.py
 Contents:
 
@@ -283,7 +283,7 @@ Contents:
   }
 ]
 
-# 2. Leak Trace Report (leak_trace_report.json)
+### 2. Leak Trace Report (leak_trace_report.json)
 Generated by: src/simulate_leak_trace.py
 Contents:
 
@@ -300,7 +300,7 @@ Contents:
   "action": "ISSUE DMCA & TERMINATE CONTRACT"
 }
 
-# 3. Vision Forensics Report (vision_forensics_report.json)
+### 3. Vision Forensics Report (vision_forensics_report.json)
 Generated by: src/vision_forensics.py
 Contents:
 
@@ -319,7 +319,7 @@ Contents:
   "timestamp": "2026-04-29T19:30:15"
 }
 
-# 4. DMCA Takedown Notice (DMCA_Test_Clip_01.txt)
+### 4. DMCA Takedown Notice (DMCA_Test_Clip_01.txt)
 Generated by: src/action_engine.py
 Contents:
 
@@ -351,11 +351,11 @@ ACTION REQUESTED: Immediate removal of infringing content
 GuardianStream Security Team
 
 
-# 5. Propagation Network Graph (propagation_graph.png)
+### 5. Propagation Network Graph (propagation_graph.png)
 Generated by: src/action_engine.py
 Description: Visual representation of how leaked content spreads across platforms (Twitter → YouTube → Telegram → Torrent sites).
 
-# 6. Terminal Output Logs
+### 6. Terminal Output Logs
 All analysis sessions generate real-time terminal logs showing:
 Engine initialization
 Frame processing progress
