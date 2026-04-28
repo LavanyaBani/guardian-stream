@@ -136,11 +136,11 @@ def analyze_frame(
         "ai_warning": warning,
     }
 
-    print(f"📷 Analyzing: {filename}")
-    print(f"🏷️ Labels: {labels if labels else []}")
-    print(f"🧩 Logos: {logos if logos else []}")
-    print(f"🔤 Text Detected: {text_detected if text_detected else []}")
-    print(f"⚠️ AI Warning: {warning if warning else 'None'}")
+    print(f" Analyzing: {filename}")
+    print(f" Labels: {labels if labels else []}")
+    print(f" Logos: {logos if logos else []}")
+    print(f" Text Detected: {text_detected if text_detected else []}")
+    print(f" AI Warning: {warning if warning else 'None'}")
     print("-" * 70)
     return result
 

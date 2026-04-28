@@ -1,3 +1,8 @@
+# Add these 3 lines at the VERY TOP (before any imports)
+import sys
+import io
+sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
+sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding='utf-8')
 import logging
 from pathlib import Path
 import json
@@ -25,7 +30,7 @@ def create_dummy_frame(path: Path, color: tuple, label: str):
     logger.debug(f"Created dummy frame: {path.name} ({label})")
 
 def main():
-    logger.info("🚀 Starting GuardianStream Leak Simulation & Trace Demo")
+    logger.info(" Starting GuardianStream Leak Simulation & Trace Demo")
     
     # 1. Setup Directories
     if SAMPLE_FRAMES_DIR.exists(): shutil.rmtree(SAMPLE_FRAMES_DIR)
@@ -43,7 +48,7 @@ def main():
     original_frames = []
     watermarked_frames = []
     
-    logger.info("\n📡 Phase 1: Distributing Content with Invisible Watermarks...")
+    logger.info("\n Phase 1: Distributing Content with Invisible Watermarks...")
     
     # 3. Create & Watermark Frames
     for i, partner in enumerate(partners):
@@ -60,13 +65,13 @@ def main():
         
         if embed_watermark(original_path, wm_path, partner["id"]):
             watermarked_frames.append({"path": wm_path, "partner": partner["id"]})
-            logger.info(f"   ✅ Sent to {partner['label']} (ID: {partner['id']})")
+            logger.info(f"    Sent to {partner['label']} (ID: {partner['id']})")
         else:
-            logger.error(f"   ❌ Failed to watermark for {partner['label']}")
+            logger.error(f"    Failed to watermark for {partner['label']}")
 
     # 4. Simulate a Leak
-    logger.info("\n🚨 PHASE 2: ALERT! Pirated Content Detected on Telegram!")
-    time.sleep(1.5) # Dramatic pause
+    logger.info("\n PHASE 2: ALERT! Pirated Content Detected on Telegram!")
+    time.sleep(1.5) 
     
     # Pick the SECOND partner to be the leaker (Prime)
     leaker_data = watermarked_frames[1] 
@@ -76,14 +81,14 @@ def main():
     found_file = LEAKED_FRAMES_DIR / f"TELEGRAM_LEAK_{leaked_file.name}"
     shutil.copy(leaked_file, found_file)
     
-    logger.info(f"   📂 Found suspicious file: {found_file.name}")
-    logger.info(f"   🔍 Initiating Forensic Analysis...")
+    logger.info(f"    Found suspicious file: {found_file.name}")
+    logger.info(f"    Initiating Forensic Analysis...")
     time.sleep(1.0)
 
     # 5. Trace the Leak
     extracted_id = extract_watermark(found_file)
     
-    logger.info(f"\n🔓 Extraction Result: '{extracted_id}'")
+    logger.info(f"\n Extraction Result: '{extracted_id}'")
     
     # 6. Generate Report & Verdict
     if "PARTNER" in extracted_id:
@@ -110,15 +115,15 @@ def main():
         
     # 7. Final Output Dashboard
     print("\n" + "="*60)
-    print(" 🕵️‍♀️  LEAK TRACE COMPLETE")
+    print("   LEAK TRACE COMPLETE")
     print("="*60)
-    print(f" 📂 Leaked File   : {found_file.name}")
-    print(f" 🔓 Source ID     : {extracted_id}")
-    print(f" ⚖️  Verdict       : {verdict}")
-    print(f" 🚀 Action        : {action}")
-    print(f" 📄 Report Saved  : {REPORT_PATH.name}")
+    print(f"  Leaked File   : {found_file.name}")
+    print(f"  Source ID     : {extracted_id}")
+    print(f"   Verdict       : {verdict}")
+    print(f"  Action        : {action}")
+    print(f"  Report Saved  : {REPORT_PATH.name}")
     print("="*60)
-    print(" ✅ System Ready for Demo Presentation.")
+   
 
 if __name__ == "__main__":
     main()

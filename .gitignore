@@ -1,5 +1,4 @@
-# --- CRITICAL: Google Cloud Secrets ---
-# NEVER upload your service account key!
+
 service-account-key.json
 *.json
 !package.json
@@ -28,7 +27,7 @@ wheels/
 *.egg
 
 # --- Virtual Environments (Venv) ---
-# If you use venv, virtualenv, or conda
+
 venv/
 ENV/
 env/
@@ -43,11 +42,11 @@ env/
 *~
 .DS_Store
 
-# --- Jupyter Notebooks (if used) ---
+# --- Jupyter Notebooks  ---
 .ipynb_checkpoints
 
 # --- Large Data & Media Files ---
-# Do not upload videos or extracted frames to GitHub!
+
 data/
 *.mp4
 *.mov
@@ -68,3 +67,8 @@ temp/
 # --- Google Cloud Local Configs ---
 application_default_credentials.json
 gcloud_config/
+
+# OS Files
+.DS_Store
+Thumbs.db
+desktop.ini

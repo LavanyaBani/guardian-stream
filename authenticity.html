@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Authenticity Detector - GuardianStream</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0a0a14 0%, #1a1a2e 100%);
+            color: #e8e8ff;
+            min-height: 100vh;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .back-btn {
+            display: inline-block;
+            color: #10b981;
+            text-decoration: none;
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+        }
+
+        .back-btn:hover {
+            text-decoration: underline;
+        }
+
+        h1 {
+            color: #10b981;
+            margin-bottom: 1rem;
+            font-size: 2.5rem;
+        }
+
+        .subtitle {
+            color: #8888aa;
+            margin-bottom: 2rem;
+        }
+
+        /* Upload Section */
+        .upload-section {
+            background: #1a1a2e;
+            border: 2px dashed #2d2d44;
+            border-radius: 1rem;
+            padding: 3rem 2rem;
+            text-align: center;
+            margin: 2rem 0;
+        }
+
+        .upload-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+
+        .upload-section h3 {
+            color: #e8e8ff;
+            margin-bottom: 0.5rem;
+        }
+
+        .upload-section p {
+            color: #8888aa;
+            margin-bottom: 1.5rem;
+        }
+
+        .upload-btn {
+            background: linear-gradient(to right, #10b981, #059669);
+            color: white;
+            padding: 0.75rem 2rem;
+            border-radius: 0.5rem;
+            border: none;
+            font-weight: bold;
+            cursor: pointer;
+            margin-right: 1rem;
+        }
+
+        .upload-btn:hover {
+            opacity: 0.9;
+        }
+
+        .analyze-btn {
+            background: linear-gradient(to right, #6366f1, #a855f7);
+            color: white;
+            padding: 0.75rem 2rem;
+            border-radius: 0.5rem;
+            border: none;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .analyze-btn:hover {
+            opacity: 0.9;
+        }
+
+        .upload-info {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            background: #0f0f1a;
+            border-radius: 0.5rem;
+            font-size: 0.85rem;
+            color: #8888aa;
+        }
+
+        /* Sample Videos Section */
+        .sample-section {
+            margin: 3rem 0;
+        }
+
+        .sample-header {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #2d2d44;
+        }
+
+        .sample-header h2 {
+            color: #10b981;
+            margin-bottom: 0.5rem;
+        }
+
+        .sample-header p {
+            color: #8888aa;
+        }
+
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .video-card {
+            background: #1a1a2e;
+            border: 1px solid #2d2d44;
+            border-radius: 1rem;
+            overflow: hidden;
+        }
+
+        .video-thumbnail {
+            width: 100%;
+            height: 280px;
+            background: #0f0f1a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #6366f1;
+            font-size: 1.2rem;
+        }
+
+        .video-thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .video-info {
+            padding: 1.5rem;
+        }
+
+        .video-info h3 {
+            color: #e8e8ff;
+            margin-bottom: 0.5rem;
+        }
+
+        .video-info p {
+            color: #8888aa;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .verdict {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        .verdict-authentic {
+            background: #10b981;
+            color: white;
+        }
+
+        .verdict-fake {
+            background: #ef4444;
+            color: white;
+        }
+
+        .terminal-output {
+            margin-top: 1rem;
+            background: #0f0f1a;
+            border: 1px solid #2d2d44;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            font-family: 'Courier New', monospace;
+            font-size: 0.8rem;
+            color: #10b981;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .terminal-output img {
+            width: 100%;
+            border-radius: 0.25rem;
+        }
+
+        .note {
+            background: rgba(99, 102, 241, 0.1);
+            border: 1px solid #6366f1;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            margin: 2rem 0;
+            color: #8888aa;
+            font-size: 0.9rem;
+        }
+
+        .note a {
+            color: #6366f1;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <a href="index.html" class="back-btn">← Back to Home</a>
+
+        <h1>🛡️ Clip Authenticity Detector</h1>
+        <p class="subtitle">Detect Deepfakes & Verify Video Authenticity using rPPG, Lip-Sync, and Multi-Engine
+            Forensics</p>
+
+        <!-- Upload Section (Static UI) -->
+        <div class="upload-section">
+            <div class="upload-icon">☁️</div>
+            <h3>Upload Video for Analysis</h3>
+            <p>Drag and drop video or click to browse</p>
+            <p style="color: #6366f1; font-size: 0.85rem;">Accepted: .mp4, .mov, .avi | Max 50MB</p>
+
+            <button class="upload-btn">📁 Choose File</button>
+            <button class="analyze-btn">🚀 Run Forensic Analysis</button>
+            <button class="upload-btn"> 🫀Choose Video type:<br>
+                1. Interview/Close-up (enables rPPG + Lip-Sync)<br>
+                2. Sports/Wide-shot (skips rPPG + Lip-Sync)</button>
+
+            <div class="upload-info">
+                <strong>Note:</strong> This is a demo MVP. For full analysis, clone our GitHub repository and run
+                locally.
+                <br>
+                <a href="https://github.com/LavanyaBani/guardian-stream" style="color: #6366f1;">View on GitHub →</a>
+            </div>
+        </div>
+
+        <!-- Sample Videos Section -->
+        <div class="sample-section">
+            <div class="sample-header">
+                <h2>📹 Sample Video Analysis Results</h2>
+                <p>Below are real analysis results from our forensic engine on test videos</p>
+            </div>
+
+            <div class="note">
+                💡 <strong>Want to test yourself?</strong> We've included 5 sample videos in our GitHub repository.
+                Clone the repo and run <code>python src/gemini_intelligence.py --interactive</code> to analyze them
+                locally.
+                <br><br>
+                📦 <strong>Sample videos available:</strong> novak_real.mp4, hawking_fake.mp4, kohli_fake.mp4,
+                rohit_real.mp4
+            </div>
+
+            <div class="video-grid">
+                <!-- Video 1: Virat Kohli Interview (Fake) -->
+                <div class="video-card">
+                    <div class="video-thumbnail">
+                        <img src="images/thumbnail-kohli.png" alt="Virat Kohli Interview">
+                    </div>
+                    <div class="video-info">
+                        <h3>Virat Kohli on Shubman Gill</h3>
+                        <p>Deepfake Clip</p>
+                        <span class="verdict verdict-fake">❌ FAKE (88%)</span>
+                        <div class="terminal-output">
+                            <img src="images/terminal-kohli.png" alt="Terminal Output - Analysis">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Video 2: Stephen Hawking (Fake) -->
+                <div class="video-card">
+                    <div class="video-thumbnail">
+                        <img src="images/thumbnail-hawking.png" alt="Stephen Hawking Skateboard">
+                    </div>
+                    <div class="video-info">
+                        <h3>Stephen Hawking Skateboarding</h3>
+                        <p>AI-Generated Deepfake Video</p>
+                        <span class="verdict verdict-fake">❌ FAKE (99%)</span>
+                        <div class="terminal-output">
+                            <img src="images/terminal-hawking.png" alt="Terminal Output - Hawking Analysis">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Video 3: Novak Djokovic (Real) -->
+                <div class="video-card">
+                    <div class="video-thumbnail">
+                        <img src="images/thumbnail-novak.png" alt="Novak Djokovic Interview">
+                    </div>
+                    <div class="video-info">
+                        <h3>Novak Djokovic Post Match </h3>
+                        <p>Actual Clip froom Australian Open</p>
+                        <span class="verdict verdict-authentic">✅ AUTHENTIC (75%)</span>
+                        <div class="terminal-output">
+                            <img src="images/terminal-novak.png" alt="Terminal Output - Analysis">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Video 4: Rohit Sharma (Real) -->
+                <div class="video-card">
+                    <div class="video-thumbnail">
+                        <img src="images/thumbnail-basketball.png" alt="Official NBA Clip">
+                    </div>
+                    <div class="video-info">
+                        <h3>Rohit Sharma 2019 World Cup</h3>
+                        <p>122 Runs vs South Africa - Authentic</p>
+                        <span class="verdict verdict-authentic">✅ AUTHENTIC (75%)</span>
+                        <div class="terminal-output">
+                            <img src="images/terminal-basketball.png" alt="Terminal Output - Analysis">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div style="text-align: center; margin: 3rem 0;">
+            <a href="https://github.com/YOUR_USERNAME/guardian-stream" class="analyze-btn"
+                style="background: linear-gradient(to right, #10b981, #059669); text-decoration: none; display: inline-block;">
+                View Full Analysis on GitHub →
+            </a>
+        </div>
+    </div>
+</body>
+
+</html>

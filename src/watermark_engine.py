@@ -41,11 +41,11 @@ def embed_watermark(image_path: Path, output_path: Path, secret_id: str):
         if not os.path.exists(dest_str):
             raise Exception("Output file was not created.")
 
-        logger.info(f"🔒 Successfully embedded ID '{secret_id}' into {final_output_path.name}")
+        logger.info(f" Successfully embedded ID '{secret_id}' into {final_output_path.name}")
         return True
 
     except Exception as e:
-        logger.error(f"❌ Failed to embed watermark: {e}")
+        logger.error(f" Failed to embed watermark: {e}")
         return False
 
 def extract_watermark(image_path: Path) -> str:
@@ -59,7 +59,7 @@ def extract_watermark(image_path: Path) -> str:
         secret_id = lsb.reveal(str(image_path.resolve()))
         
         if secret_id:
-            logger.info(f"🔓 Extracted ID: '{secret_id}' from {image_path.name}")
+            logger.info(f" Extracted ID: '{secret_id}' from {image_path.name}")
             return secret_id
         else:
             return "NO_WATERMARK_FOUND"
@@ -85,11 +85,11 @@ if __name__ == "__main__":
     if embed_watermark(test_img, output_img, secret):
         result = extract_watermark(output_img)
         if result == secret:
-            print(f"✅ TEST PASSED: Embedded & Extracted '{secret}' correctly!")
+            print(f"TEST PASSED: Embedded & Extracted '{secret}' correctly!")
         else:
-            print(f"❌ FAIL: Expected '{secret}', got '{result}'")
+            print(f" FAIL: Expected '{secret}', got '{result}'")
     else:
-        print("❌ FAIL: Embedding process failed.")
+        print(" FAIL: Embedding process failed.")
         
     # Cleanup
 
@@ -101,4 +101,4 @@ if __name__ == "__main__":
         output_img.unlink()  # Fixed: was deleting test_img again by mistake
         print(f"Cleaned up: {output_img.name}")
         
-    print("✅ All tests complete and cleaned up.")
+    print("All tests complete and cleaned up.")

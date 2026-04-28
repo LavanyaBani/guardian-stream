@@ -1,78 +1,124 @@
 import logging
 import feedparser
-import time
-from urllib.parse import quote
+import urllib.parse
+import re
 
-logging.basicConfig(level=logging.INFO)
+logging.basicConfig(level=logging.INFO, format="%(levelname)s %(message)s")
 logger = logging.getLogger(__name__)
 
-def fetch_live_news(query: str, num_results: int = 3) -> list[dict]:
+# Trusted sports/news sources for credibility scoring (when news IS found)
+TRUSTED_SOURCES = [
+    "espn", "bbc", "icc", "nba", "reuters", "ap", 
+    "cricbuzz", "wion", "espn.in", "sky sports", 
+    "the athletic", "sportskeeda", "ndtv sports"
+]
+
+def fetch_live_news(query: str, num_results: int = 3, trusted_only: bool = True) -> list:
     """
-    Fetches live news using Google News RSS Feed (More stable than scraping).
+    Fetches live news articles via Google News RSS.
+    
+    Returns empty list if fetch fails — other forensic layers handle the verdict.
+    
+    Args:
+        query: Search query
+        num_results: Number of results to return
+        trusted_only: If True, prioritize verified sources
+    
+    Returns:
+        List of article dicts with title, snippet, source, url, trusted
+        Returns [] if fetch fails (no fallback simulation)
     """
-    logger.info(f"📡 Fetching RSS feed for: '{query}'")
+    results = []
+    encoded_query = urllib.parse.quote(query)
+    rss_url = f"https://news.google.com/rss/search?q={encoded_query}&hl=en-IN&gl=IN&ceid=IN:en"
     
     try:
-        # Encode query for URL
-        safe_query = quote(query)
-        
-        # Construct Google News RSS URL
-        # This is an official public endpoint
-        rss_url = f"https://news.google.com/rss/search?q={safe_query}+sports&hl=en-IN&gl=IN&ceid=IN:en"
-        
-        # Parse the feed
+        logger.info(f" Fetching RSS feed for: '{query}'")
         feed = feedparser.parse(rss_url)
         
-        results = []
-        if feed.entries:
-            for entry in feed.entries[:num_results]:
-                # Extract title and link
-                title = entry.title
-                link = entry.link
+        for entry in feed.entries[:15]:  # Scan more to find trusted sources
+            # Handle source safely (can be dict, object, or None)
+            source_obj = entry.get("source")
+            if source_obj is None:
+                source = ""
+            elif isinstance(source_obj, dict):
+                source = source_obj.get("title", "").lower()
+            elif hasattr(source_obj, 'text'):
+                source = source_obj.text.lower()
+            else:
+                source = str(source_obj).lower()
+            
+            title = entry.get("title", "")
+            
+            # Handle snippet safely
+            snippet_obj = entry.get("summary") or entry.get("description") or ""
+            if isinstance(snippet_obj, dict):
+                snippet = snippet_obj.get("value", "")
+            elif hasattr(snippet_obj, 'text'):
+                snippet = snippet_obj.text
+            else:
+                snippet = str(snippet_obj)
+            snippet = re.sub(r'<.*?>', '', snippet).strip()
+            
+            url = entry.get("link", "")
+            
+            # Check if trusted
+            is_trusted = any(ts in source for ts in TRUSTED_SOURCES) if source else False
+            
+            article = {
+                "title": title,
+                "snippet": snippet[:200],
+                "source": source,
+                "url": url,
+                "trusted": is_trusted
+            }
+            
+            # Filter by trusted if requested
+            if trusted_only and not is_trusted:
+                continue
                 
-                # Google News links are often redirected, but valid for demo
-                results.append({
-                    "source_url": link,
-                    "snippet": f"News: {title}"
-                })
+            results.append(article)
             
-            logger.info(f"✅ Found {len(results)} live articles via RSS.")
-            return results
-        else:
-            logger.warning("No entries found in RSS feed.")
-            raise Exception("Empty RSS feed")
-            
+            if len(results) >= num_results:
+                break
+        
+        trusted_count = sum(1 for r in results if r["trusted"])
+        logger.info(f" Found {len(results)} articles ({trusted_count} from trusted sources)")
+        return results
+        
     except Exception as e:
-        logger.warning(f"RSS Fetch failed: {e}. Switching to Simulation Mode.")
-        return get_simulated_news(query)
+        logger.warning(f" News fetch failed: {e} (other forensic layers will handle verification)")
+        return []
 
-def get_simulated_news(query: str) -> list[dict]:
-    """Fallback simulated news if live fetch fails."""
-    logger.info("🤖 Using Simulated News Headlines (Fallback)")
-    q = query.lower()
+def get_news_credibility_summary(results: list) -> dict:
+    """Calculate credibility metrics for display."""
+    if not results:
+        return {"avg_credibility": 0, "trusted_count": 0, "total": 0}
     
-    if "rohit" in q or "cricket" in q:
-        return [
-            {"source_url": "https://espncricinfo.com/series/rohith-century", "snippet": "Rohit Sharma smashes historic century in World Cup thriller."},
-            {"source_url": "https://bbc.com/sport/cricket", "snippet": "India defeats South Africa thanks to Rohit's brilliant batting."},
-            {"source_url": "https://icc-cricket.com/news", "snippet": "Match Report: Rohit Sharma named Player of the Match."}
-        ]
-    elif "hawking" in q or "skate" in q:
-        return [
-            {"source_url": "https://snopes.com/fact-check/hawking", "snippet": "FACT CHECK: No evidence Stephen Hawking ever skateboarded. Image is AI-generated."},
-            {"source_url": "https://reuters.com/technology/deepfake", "snippet": "New deepfake video of Stephen Hawking circulates online, debunked by experts."},
-            {"source_url": "https://nature.com/articles/ai", "snippet": "Scientists warn against AI fabrications of historical figures."}
-        ]
-    elif "lebron" in q or "basketball" in q:
-        return [
-            {"source_url": "https://nba.com/lakers/lebron", "snippet": "LeBron James leads Lakers to victory with dominant performance."},
-            {"source_url": "https://bleacherreport.com/nba", "snippet": "NBA Highlights: LeBron's latest game stats and analysis."}
-        ]
-    else:
-        return [{"source_url": "https://news.google.com", "snippet": f"General news coverage for {query}"}]
+    trusted = sum(1 for r in results if r.get("trusted", False))
+    total = len(results)
+    
+    return {
+        "avg_credibility": round((trusted / total) * 100) if total > 0 else 0,
+        "trusted_count": trusted,
+        "total": total,
+        "sources": list(set(r["source"] for r in results if r["source"]))
+    }
 
 if __name__ == "__main__":
-    print("Testing RSS News Fetcher...")
-    results = fetch_live_news("Rohit Sharma century")
-    for r in results:
-        print(f"- {r['snippet']} ({r['source_url']})")
+    print(" Testing News Fetcher (No Fallback)\n")
+    
+    test_queries = ["cricket world cup", "novak djokovic", "hawking deepfake"]
+    
+    for query in test_queries:
+        print(f" Query: '{query}'")
+        results = fetch_live_news(query, num_results=2, trusted_only=True)
+        if results:
+            for r in results:
+                badge = "Trusted" if r["trusted"] else "Not-Trusted"
+                print(f"  {badge} {r['title'][:50]}... ({r['source']})")
+        else:
+            print("    No results (API unavailable — other engines will verify)")
+        print()
+    
+    print(" Test complete!")

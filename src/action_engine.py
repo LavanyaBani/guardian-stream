@@ -50,7 +50,7 @@ This is an automated legal notice. Failure to comply may result in further legal
     with open(report_file, 'w', encoding='utf-8') as f:
         f.write(report_content)
     
-    logger.info(f"📄 DMCA Report generated: {report_file.name}")
+    logger.info(f" DMCA Report generated: {report_file.name}")
     return str(report_file)
 
 def simulate_propagation_graph(original_clip: str, pirated_clips: list, output_dir: Path) -> str:
@@ -58,7 +58,7 @@ def simulate_propagation_graph(original_clip: str, pirated_clips: list, output_d
     Creates a visual graph showing the path of content leakage.
     Returns the path to the saved image.
     """
-    logger.info("📊 Generating Content Propagation Graph...")
+    logger.info(" Generating Content Propagation Graph...")
     
     G = nx.DiGraph()
     
@@ -106,12 +106,12 @@ def simulate_propagation_graph(original_clip: str, pirated_clips: list, output_d
     plt.savefig(graph_path, dpi=150, bbox_inches='tight')
     plt.close()
     
-    logger.info(f"📈 Propagation Graph saved: {graph_path.name}")
+    logger.info(f" Propagation Graph saved: {graph_path.name}")
     return str(graph_path)
 
 if __name__ == "__main__":
     # --- Self Test ---
-    print("🧪 Testing Action Engine...")
+    print(" Testing Action Engine...")
     root = Path(__file__).resolve().parent.parent
     test_dir = root / "test_action_output"
     
@@ -126,4 +126,4 @@ if __name__ == "__main__":
     ]
     graph_path = simulate_propagation_graph("Original_Match", spread_data, test_dir)
     
-    print(f"✅ Test Complete. Files saved in: {test_dir}")
+    print(f" Test Complete. Files saved in: {test_dir}")

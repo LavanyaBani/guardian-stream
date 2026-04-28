@@ -1,46 +1,61 @@
-# Guardian Stream
+# 🛡️ GuardianStream - AI-Powered Sports Media Protection
 
-Basic project scaffold.
+## 🏆 Hackathon Project
+**Multi-layer forensic engine for detecting piracy, deepfakes, and content misappropriation in sports media.**
 
-## Setup
+---
 
-1. Create a virtual environment (example):
-   - `python -m venv .venv`
-2. Activate it:
-   - Windows (PowerShell): `.venv\Scripts\Activate.ps1`
-   - macOS/Linux: `source .venv/bin/activate`
-3. Install dependencies:
-   - `pip install -r requirements.txt`
+## 🚀 Features
 
-## Structure
+### 1. **Piracy Detection**
+- Perceptual hashing (pHash) for modified content detection
+- Detects cropped, flipped, and re-encoded copies
 
-- `src/` - application source code
+### 2. **Deepfake Verification**
+- Live news intelligence via RSS feeds
+- Cross-modal semantic dissonance detection
+- OCR-based context verification
 
-# 🛡️ GuardianStream: Digital Asset Protection Engine
+### 3. **Forensic Watermarking**
+- LSB steganography for leak tracing
+- Identifies specific distributor who leaked content
 
-## 🚀 Problem
-Sports media faces massive piracy and deepfake misappropriation. Existing tools only detect exact copies, missing modified or AI-generated fakes.
+### 4. **Propagation Tracking**
+- Visual graph showing content spread across platforms
+- Automated DMCA report generation
 
-## 💡 Solution
-A scalable, AI-driven platform that:
-1.  **Detects Piracy:** Uses Perceptual Hashing (pHash) to find cropped/flipped copies instantly.
-2.  **Identifies Deepfakes:** Uses Gemini 1.5 Pro + Google Search to verify if events actually happened.
-3.  **Traces Leaks:** Simulates dynamic watermarking to identify the source of unauthorized redistribution.
-4.  **Automates Takedowns:** Generates DMCA reports and disables monetization automatically.
+### 5. **Decision Engine**
+- Multi-layer confidence scoring
+- Resilience mode (works offline if API fails)
 
-## ️ Architecture
-- **Data Layer:** Google Cloud Storage (Frames & Assets)
-- **Analysis Engine:** 
-  - Fast Filter: ImageHash (pHash)
-  - Forensics: Cloud Vision API (Watermarks/Logos)
-  - Intelligence: Gemini 1.5 Pro with Search Grounding (Context Verification)
-- **Action Layer:** Automated Reporting & Takedown Bot
+---
 
 ## 🛠️ Tech Stack
-- Python, OpenCV, ImageHash
-- Google Cloud Platform (Vertex AI, Vision API, BigQuery, Storage)
-- Streamlit (Dashboard)
 
-## 📊 Demo Results
-*(We will fill this in once your script finishes!)*
+- **Language:** Python 3.10+
+- **Computer Vision:** OpenCV, PIL
+- **AI/ML:** Google Gemini, Vertex AI, Whisper
+- **Cloud:** Google Cloud Storage, Vision API
+- **Forensics:** Stegano (LSB), ImageHash
+- **Visualization:** NetworkX, Matplotlib
+
+---
+
+## 📦 Installation
+
+```bash
+# Clone the repository
+git clone https://github.com/yourusername/guardian-stream.git
+cd guardian-stream
+
+# Create virtual environment
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Set up environment variables
+export GOOGLE_CLOUD_PROJECT="your-project-id"
+export GOOGLE_API_KEY="your-api-key"
 

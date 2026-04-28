@@ -15,16 +15,16 @@ key_path = project_root / "service-account-key.json"
 if not key_path.exists():
     raise FileNotFoundError(f"CRITICAL: Key not found at {key_path}")
 
-print(f"✅ Found Key File: {key_path}")
+print(f" Found Key File: {key_path}")
 
 try:
     STORAGE_CLIENT = storage.Client.from_service_account_json(str(key_path))
-    print(f"✅ Client Initialized! Project: {STORAGE_CLIENT.project}")
+    print(f" Client Initialized! Project: {STORAGE_CLIENT.project}")
 except Exception as e:
-    print(f"❌ Initialization Failed: {e}")
+    print(f" Initialization Failed: {e}")
     raise e
 
-# --- Define ALL Paths Here ---
+
 ORIGINAL_DIR = project_root / "data" / "original" / "real_sports"
 SAMPLE_EDITED_DIR = project_root / "data" / "sample_edited" / "edited_real"
 DEEPFAKE_DIR = project_root / "data" / "sample_edited" / "deepfake_mismatch" # Added Deepfake
@@ -44,7 +44,7 @@ def scan_mp4s() -> list[Path]:
     videos = []
     folders_to_scan = [ORIGINAL_DIR, SAMPLE_EDITED_DIR, DEEPFAKE_DIR]
     
-    print(f"\n🔍 Scanning {len(folders_to_scan)} folders...")
+    print(f"\n Scanning {len(folders_to_scan)} folders...")
     for folder in folders_to_scan:
         if not folder.exists():
             logger.warning(f"Folder missing: {folder}")
@@ -128,7 +128,7 @@ def main(client):
         except Exception as e:
             logger.error(f"Failed {video.name}: {e}")
             
-    print("\n✅ All done!")
+    print("\n All done!")
     return 0
 
 if __name__ == "__main__":
