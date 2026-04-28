@@ -48,21 +48,23 @@ env/
 # --- Large Data & Media Files ---
 
 data/
-*.mp4
+
 *.mov
 *.avi
-*.jpg
-*.png
-*.jpeg
+
+
+
 frames/
 uploads/
 downloads/
+temp_frames/
+*.jpg
 
 # --- Logs & Temporary Files ---
 logs/
 *.log
 tmp/
-temp/
+temp_frames/
 
 # --- Google Cloud Local Configs ---
 application_default_credentials.json
@@ -72,3 +74,4 @@ gcloud_config/
 .DS_Store
 Thumbs.db
 desktop.ini
+
