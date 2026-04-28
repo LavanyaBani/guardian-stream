@@ -5,112 +5,6 @@ GuardianStream is a production-grade, multi-modal forensic analysis platform des
 Biological Authentication,  Leak Source Identification, Deepfake Detection, Real-Time Analysis,  Legal Evidence
 
 
-##  Installation
-
-### **Prerequisites**
-Python 3.11 or higher
-FFmpeg (for audio extraction)
-Git
-### Step 1: Clone Repository
-git clone https://github.com/yourusername/guardian-stream.git
-cd guardian-stream
-
-### Step 2: Create Virtual Environment
- Windows
-python -m venv .venv
-.venv\Scripts\activate
-
- macOS/Linux
-python3 -m venv .venv
-source .venv/bin/activate
-
-### Step 3: Install Python Dependencies
-pip install -r requirements.txt
-
-### **Step 4: Install FFmpeg**
-Windows:  Download from https://ffmpeg.org/download.html --> Add to system PATH
-macOS: brew install ffmpeg
-Linux: sudo apt-get install ffmpeg
-
-### Step 5: Configure Google Gemini API
-GOOGLE_API_KEY=your_api_key_here
-
-### Step 6: Verify Installation
- Test rPPG engine
-python src/rppg_engine.py
-
- Test lip-sync engine
-python src/lip_sync_engine.py videos/novak_interview_real.mp4
-
- Test news fetcher
-python test_news_fetch.py
-
-##  Usage & Running Modes
-### Mode 1: Interactive Analysis (Recommended)
-Analyze videos with full forensic pipeline:
-  python src/gemini_intelligence.py --interactive
-
-Interactive Prompt: Example
-  Enter video file path (or press Enter for demo clips): videos/novak_interview_real.mp4
-  Video type:
-   1. Interview/Close-up (enables rPPG + Lip-Sync)
-   2. Sports/Wide-shot (skips rPPG + Lip-Sync)
-   Choose (1 or 2, default=2): 1
-
-  Context: Novak Djokovic post match conference
-
-Output: INFO REAL MODE ENABLED - Will analyze actual video files
-INFO Video: videos/novak_interview_real.mp4
-INFO Initializing GenAI Client with Stable API (v1)...
-INFO Loaded 5 entries from vision report
-INFO Transcribing first 15s of novak_interview_real.mp4...
-INFO [REAL] Whisper transcript: "I don't know what I can say to them..."
-INFO Running Semantic Triangulation...
-INFO PULSE DETECTED: Physiological pulse at 71 BPM
-INFO Verdict: AUTHENTIC (Confidence: 93%)
-INFO Analysis Complete! Saved to gemini_intelligence_report.json
-
-### Mode 2: Piracy Simulation
-Simulate leak detection and trace source:
-  python src/simulate_leak_trace.py
-
-Output:
-INFO Starting GuardianStream Piracy Detection & Trace Demo
-INFO Phase 1: Distributing Content with Invisible Watermarks...
-INFO Successfully embedded ID 'PARTNER_A_NETFLIX' into wm_match_ep1.png
-INFO Successfully embedded ID 'PARTNER_B_PRIME' into wm_match_ep2.png
-INFO Successfully embedded ID 'PARTNER_C_HOTSTAR' into wm_match_ep3.png
-INFO PHASE 2: ALERT! Pirated Content Detected on Telegram!
-INFO Found suspicious file: TELEGRAM_LEAK_wm_match_ep2.png
-INFO Initiating Forensic Analysis...
-INFO Extracted ID: 'PARTNER_B_PRIME' from TELEGRAM_LEAK...
-Extraction Result: 'PARTNER_B_PRIME'
-
-==================== LEAK TRACE COMPLETE ====================
-Leaked File     : TELEGRAM_LEAK_wm_match_ep2.png
-Source ID       : PARTNER_B_PRIME
-Verdict         : IDENTIFIED
-Action          : ISSUE DMCA & TERMINATE CONTRACT
-Report Saved    : leak_trace_report.json
-==============================================================
-
-### Mode 3: Individual Engine Testing
-Test specific forensic engines:
- Test rPPG engine
-  python src/rppg_engine.py videos/novak_interview_real.mp4
-
- Test lip-sync engine
-  python src/lip_sync_engine.py videos/novak_interview_real.mp4 150
-
- Test vision forensics
-  python src/vision_forensics.py videos/novak_interview_real.mp4
-
- Test news fetcher
-  python test_news_fetch.py "Novak Djokovic Australian Open"
-
- Test semantic dissonance
-  python test_dissonance_standalone.py
- 
 
 ## The Problem
 The sports broadcasting industry faces unprecedented threats: Deepfake Interviews, Broadcast Piracy, Misinformation, No Biological Proof, No Legal Evidence
@@ -238,6 +132,114 @@ Confidence: 98.5%
 Action: Issue DMCA takedown notice to Amazon Prime
 
 File: src/watermark_engine.py, src/simulate_leak_trace.py
+
+
+##  Installation
+
+### **Prerequisites**
+Python 3.11 or higher
+FFmpeg (for audio extraction)
+Git
+### Step 1: Clone Repository
+git clone https://github.com/yourusername/guardian-stream.git
+cd guardian-stream
+
+### Step 2: Create Virtual Environment
+ Windows
+python -m venv .venv
+.venv\Scripts\activate
+
+ macOS/Linux
+python3 -m venv .venv
+source .venv/bin/activate
+
+### Step 3: Install Python Dependencies
+pip install -r requirements.txt
+
+### **Step 4: Install FFmpeg**
+Windows:  Download from https://ffmpeg.org/download.html --> Add to system PATH
+macOS: brew install ffmpeg
+Linux: sudo apt-get install ffmpeg
+
+### Step 5: Configure Google Gemini API
+GOOGLE_API_KEY=your_api_key_here
+
+### Step 6: Verify Installation
+ Test rPPG engine
+python src/rppg_engine.py
+
+ Test lip-sync engine
+python src/lip_sync_engine.py videos/novak_interview_real.mp4
+
+ Test news fetcher
+python test_news_fetch.py
+
+##  Usage & Running Modes
+### Mode 1: Interactive Analysis (Recommended)
+Analyze videos with full forensic pipeline:
+  python src/gemini_intelligence.py --interactive
+
+Interactive Prompt: Example
+  Enter video file path (or press Enter for demo clips): videos/novak_interview_real.mp4
+  Video type:
+   1. Interview/Close-up (enables rPPG + Lip-Sync)
+   2. Sports/Wide-shot (skips rPPG + Lip-Sync)
+   Choose (1 or 2, default=2): 1
+
+  Context: Novak Djokovic post match conference
+
+Output: INFO REAL MODE ENABLED - Will analyze actual video files
+INFO Video: videos/novak_interview_real.mp4
+INFO Initializing GenAI Client with Stable API (v1)...
+INFO Loaded 5 entries from vision report
+INFO Transcribing first 15s of novak_interview_real.mp4...
+INFO [REAL] Whisper transcript: "I don't know what I can say to them..."
+INFO Running Semantic Triangulation...
+INFO PULSE DETECTED: Physiological pulse at 71 BPM
+INFO Verdict: AUTHENTIC (Confidence: 93%)
+INFO Analysis Complete! Saved to gemini_intelligence_report.json
+
+### Mode 2: Piracy Simulation
+Simulate leak detection and trace source:
+  python src/simulate_leak_trace.py
+
+Output:
+INFO Starting GuardianStream Piracy Detection & Trace Demo
+INFO Phase 1: Distributing Content with Invisible Watermarks...
+INFO Successfully embedded ID 'PARTNER_A_NETFLIX' into wm_match_ep1.png
+INFO Successfully embedded ID 'PARTNER_B_PRIME' into wm_match_ep2.png
+INFO Successfully embedded ID 'PARTNER_C_HOTSTAR' into wm_match_ep3.png
+INFO PHASE 2: ALERT! Pirated Content Detected on Telegram!
+INFO Found suspicious file: TELEGRAM_LEAK_wm_match_ep2.png
+INFO Initiating Forensic Analysis...
+INFO Extracted ID: 'PARTNER_B_PRIME' from TELEGRAM_LEAK...
+Extraction Result: 'PARTNER_B_PRIME'
+
+*==================== LEAK TRACE COMPLETE ====================
+Leaked File     : TELEGRAM_LEAK_wm_match_ep2.png
+Source ID       : PARTNER_B_PRIME
+Verdict         : IDENTIFIED
+Action          : ISSUE DMCA & TERMINATE CONTRACT
+Report Saved    : leak_trace_report.json
+==============================================================*
+
+### Mode 3: Individual Engine Testing
+Test specific forensic engines:
+ Test rPPG engine
+  python src/rppg_engine.py videos/novak_interview_real.mp4
+
+ Test lip-sync engine
+  python src/lip_sync_engine.py videos/novak_interview_real.mp4 150
+
+ Test vision forensics
+  python src/vision_forensics.py videos/novak_interview_real.mp4
+
+ Test news fetcher
+  python test_news_fetch.py "Novak Djokovic Australian Open"
+
+ Test semantic dissonance
+  python test_dissonance_standalone.py
+ 
 
 
 ## ** Tech Stack**
