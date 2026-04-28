@@ -1,7 +1,8 @@
 # **Guardian-Stream**
 GuardianStream is a production-grade, multi-modal forensic analysis platform designed to protect sports broadcasters from deepfakes, piracy, and misinformation. Our system employs seven distinct forensic engines that work in concert to verify video authenticity and trace unauthorized content distribution in real-time.
 
-## **Key Capabilities**--Biological Authentication,  Leak Source Identification, Deepfake Detection, Real-Time Analysis,  Legal Evidence
+## **Key Capabilities**--
+Biological Authentication,  Leak Source Identification, Deepfake Detection, Real-Time Analysis,  Legal Evidence
 
 
 ##  Installation
@@ -34,7 +35,7 @@ Linux: sudo apt-get install ffmpeg
 ### Step 5: Configure Google Gemini API
 GOOGLE_API_KEY=your_api_key_here
 
-# Step 6: Verify Installation
+### Step 6: Verify Installation
  Test rPPG engine
 python src/rppg_engine.py
 
