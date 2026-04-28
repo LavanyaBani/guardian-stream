@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GuardianStream - Sports Media Forensics</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0a0a14 0%, #1a1a2e 100%);
+            color: #e8e8ff;
+            min-height: 100vh;
+            padding: 2rem;
+        }
+        .container { max-width: 1200px; margin: 0 auto; }
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(90deg, #6366f1, #a855f7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .subtitle { color: #8888aa; font-size: 1.2rem; margin-bottom: 3rem; }
+        .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 2rem; margin: 2rem 0; }
+        .card {
+            background: #1a1a2e;
+            border: 2px solid #2d2d44;
+            border-radius: 1rem;
+            padding: 2rem;
+            transition: all 0.3s;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: #6366f1;
+        }
+        .card h2 { color: #6366f1; margin-bottom: 1rem; font-size: 1.8rem; }
+        .card ul { margin: 1.5rem 0; padding-left: 1.5rem; color: #8888aa; }
+        .card li { margin: 0.5rem 0; }
+        .btn {
+            display: inline-block;
+            background: linear-gradient(to right, #6366f1, #a855f7);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 0.5rem;
+            text-decoration: none;
+            font-weight: bold;
+            margin-top: 1rem;
+            transition: opacity 0.3s;
+        }
+        .btn:hover { opacity: 0.9; }
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 3rem 0;
+        }
+        .feature {
+            background: #1a1a2e;
+            border: 1px solid #2d2d44;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            text-align: center;
+        }
+        .feature-icon { font-size: 2rem; margin-bottom: 0.5rem; }
+        footer {
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid #2d2d44;
+            text-align: center;
+            color: #6b7280;
+        }
+        footer a { color: #6366f1; text-decoration: none; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🛡️ GuardianStream</h1>
+        <p class="subtitle">Multi-Modal Sports Media Forensics Engine</p>
+        
+        <div style="background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(168, 85, 247, 0.1)); border: 1px solid #6366f1; border-radius: 1rem; padding: 2rem; margin: 2rem 0;">
+            <h2 style="color: #6366f1; margin-bottom: 1rem;">Protecting sports broadcasters from deepfakes, piracy, and misinformation</h2>
+            <p style="color: #8888aa;">GuardianStream applies seven forensic layers to identify unauthorized broadcasts and verify clip authenticity with real-time evidence.</p>
+        </div>
+
+        <div class="cards">
+            <div class="card" style="border-color: #f59e0b;">
+                <h2>🔒 Piracy Detector</h2>
+                <p>Detect unauthorized broadcasts and trace leak sources using perceptual hashing, steganography watermarks, and propagation graphs.</p>
+                <ul>
+                    <li>pHash fingerprinting</li>
+                    <li>Invisible watermark extraction</li>
+                    <li>Leak source identification</li>
+                    <li>DMCA notice generation</li>
+                    <li>Propagation network mapping</li>
+                </ul>
+                <a href="piracy.html" class="btn">Explore Piracy Detector →</a>
+            </div>
+
+            <div class="card" style="border-color: #10b981;">
+                <h2>🛡️ Clip Authenticity Detector</h2>
+                <p>Verify video authenticity using biological signal detection, lip-sync forensics, and multi-source verification.</p>
+                <ul>
+                    <li>rPPG pulse detection (71 BPM)</li>
+                    <li>Lip-sync correlation analysis</li>
+                    <li>Semantic dissonance checking</li>
+                    <li>Live news verification</li>
+                    <li>Multi-engine consensus</li>
+                </ul>
+                <a href="authenticity.html" class="btn">Explore Authenticity Detector →</a>
+            </div>
+        </div>
+
+        <h2 style="text-align: center; margin: 3rem 0 2rem;">Seven-Layer Forensic Engine</h2>
+        <div class="features">
+            <div class="feature"><div class="feature-icon">🔍</div><p>Perceptual Hash</p></div>
+            <div class="feature"><div class="feature-icon">👁️</div><p>Vision AI + OCR</p></div>
+            <div class="feature"><div class="feature-icon">📰</div><p>News Verification</p></div>
+            <div class="feature"><div class="feature-icon">🧠</div><p>Semantic Dissonance</p></div>
+            <div class="feature"><div class="feature-icon">💓</div><p>rPPG Biological</p></div>
+            <div class="feature"><div class="feature-icon">🎬</div><p>Lip-Sync Forensic</p></div>
+            <div class="feature"><div class="feature-icon">🔐</div><p>Steganography Watermark</p></div>
+        </div>
+
+        <footer>
+            <p>Built for Hackathon 2026 • Protecting Sports Media Integrity</p>
+            <p style="margin-top: 0.5rem;">
+                <a href="https://github.com/YOUR_USERNAME/guardian-stream" target="_blank">GitHub Repository</a> •
+                <a href="#" target="_blank">Demo Video</a>
+            </p>
+        </footer>
+    </div>
+</body>
+</html>
