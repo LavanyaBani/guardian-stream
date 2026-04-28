@@ -13,7 +13,7 @@ The sports broadcasting industry faces unprecedented threats: Deepfake Interview
 
 ## **Seven-Layer Forensic Engine**
 ### **Layer 1: Perceptual Hash (pHash)**
-Purpose: Detect unauthorized copies and modified versions of broadcast content.
+Purpose: Detect unauthorized copies and modified versions of broadcast content.<br>
 How It Works:
 Convert video frame to grayscale
 Resize to 32×32 pixels (standardization)
